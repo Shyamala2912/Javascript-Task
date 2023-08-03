@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Json Input</p>
+    <textarea id="json_input" rows="10" cols="50"></textarea><br>
+    <button onclick="generateHandler()">Generate</button>
+    <p>html output</p>
+    <textarea id="html_input" rows="10" cols="50"></textarea>
+    <script>
+        var usedIds = [];
+        
+        function generateHandler() {
+            let jsonVal = document.getElementById("json_input").value;
+            let parsedJson = JSON.parse(jsonVal);
+            let htmlElements = parsedJson.map((ele) => generateHtml(ele));
+            document.getElementById("html_input").value = htmlElements.join('\n');
+        }
+
+        function generateHtml(val) {
+            if (usedIds.includes(val.id)) {
+                alert("ID duplicate: " + val.id);
+                return '';
+            }
+            
+            usedIds.push(val.id);
+            let div = document.createElement("div");
+            div.setAttribute("class", "root");
+            div.setAttribute("data-id", val.id);
+            let usernameSpan = document.createElement("span");
+            usernameSpan.setAttribute("class", "username");
+            usernameSpan.textContent = val.username;
+            let videoNameSpan = document.createElement("span");
+            videoNameSpan.setAttribute("class", "video_name");
+            videoNameSpan.textContent = val.video_name;
+            let additionalDetailsSpan = document.createElement("span");
+            additionalDetailsSpan.setAttribute("class", "additional_details");
+            let typeSpan = document.createElement("span");
+            typeSpan.setAttribute("class", "type");
+            typeSpan.textContent = val.action;
+            additionalDetailsSpan.append(typeSpan);
+            div.append(usernameSpan);
+            div.append(videoNameSpan);
+            div.append(additionalDetailsSpan);
+
+            return div.outerHTML;
+        }
+    </script>
+</body>
+</html>
