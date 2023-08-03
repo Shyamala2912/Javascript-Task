@@ -7,7 +7,7 @@
 </head>
 <body>
     <p>Json Input</p>
-    <textarea id="json_input" rows="10" cols="50"></textarea><br>
+    <textarea id="json_input" rows="10" cols="50" onkeydown="changeHandeler()"></textarea><br>
     <button onclick="generateHandler()">Generate</button>
     <p>html output</p>
     <textarea id="html_input" rows="10" cols="50"></textarea>
@@ -19,6 +19,12 @@
             let parsedJson = JSON.parse(jsonVal);
             let htmlElements = parsedJson.map((ele) => generateHtml(ele));
             document.getElementById("html_input").value = htmlElements.join('\n');
+        }
+
+        function changeHandeler()
+        {
+            document.getElementById("html_input").value = ""
+            usedIds.length = 0
         }
 
         function generateHtml(val) {
